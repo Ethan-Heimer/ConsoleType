@@ -18,6 +18,13 @@ class CharacterBuffer{
     public: 
         static void AddCharacterToBuffer(CharacterBuffer* buffer, Character character);
         static void RemoveCharacterFromBuffer(CharacterBuffer* buffer);
+
+        static void EditBufferColor(CharacterBuffer* buffer, char color);
+        static void EditBuffer(CharacterBuffer* buffer, const wchar_t* character);
+
+        static void EditCharacterColor(CharacterBuffer* buffer, int index, char color);
+        static void EditCharacter(CharacterBuffer* buffer, int index, wchar_t character);
+
         static void ClearBuffer(CharacterBuffer* buffer);
 
         static void GetBufferIt(CharacterBuffer* buffer, BufferIt& start, BufferIt& end);
@@ -36,6 +43,9 @@ class CharacterBuffer{
 
         void Add(Character character);
         void Remove();
+
+        void EditColor(int index, char color);
+        void EditCharacter(int index, wchar_t character);
 
         int Size(); 
 };

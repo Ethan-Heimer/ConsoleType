@@ -241,7 +241,8 @@ void Display::Show(){
     BufferIt start;
     BufferIt end;
 
-    cchar_t ptr;
+    int lineNumber = 0;
+    vector<Character> lineBuffer;
 
     for(int i = 0; i < buffers.size(); i++){
         auto buffer = GetBuffer(i);
@@ -250,16 +251,41 @@ void Display::Show(){
         for(BufferIt it = start; it != end; it++){
             Character c = *it;
 
-            wchar_t wchar = c.character;
-            setcchar(&ptr, &wchar, 0, 0, nullptr);
-
-            attron(COLOR_PAIR(c.color));
-            add_wch(&ptr);
-            attron(COLOR_PAIR(c.color));
+            if(c.character == L'\n'){
+                RenderLine(&lineBuffer[0], lineBuffer.size(), lineNumber);
+                lineBuffer.clear();
+                lineNumber++;
+            }
+            else
+                lineBuffer.push_back(c);
         }
+        
+        RenderLine(&lineBuffer[0], lineBuffer.size(), lineNumber);
+        lineBuffer.clear();
+        lineNumber++;
     } 
     
     refresh();
+}
+
+void Display::RenderLine(Character* characters, int lineLength, int lineNumber){
+    cchar_t ptr;
+
+    move(lineNumber, COLS/2 - lineLength/2);
+
+    for(int i = 0; i < lineLength; i++){
+        Character c = characters[i];  
+    
+        wchar_t wchar = c.character; 
+        setcchar(&ptr, &wchar, 0, 0, nullptr);
+        
+        attron(COLOR_PAIR(c.color));
+        add_wch(&ptr);
+        attron(COLOR_PAIR(c.color));
+    }
+
+    setcchar(&ptr, L"\n", 0, 0, nullptr);
+    add_wch(&ptr);
 }
 
 void Display::RenderTextBox(wstring heading, wstring* lines, int lineCount, char color, CharacterBuffer* buffer){
@@ -302,8 +328,6 @@ void Display::RenderTextBox(wstring heading, wstring* lines, int lineCount, char
     Char(L'└', color, buffer); 
     Line(L'─', boxlen, color, buffer);
     Char(L'┘', color, buffer);  
-
-    Char('\n', color, buffer);
 }
 
 int Display::GetLongestStringLength(wstring* lines, int lineCount){

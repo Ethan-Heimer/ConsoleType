@@ -17,6 +17,16 @@ void CharacterBuffer::Add(Character character){
     buffer->push_back(character);
 }
 
+void CharacterBuffer::EditColor(int index, char color){
+    Character* c = &(*buffer)[index];
+    c->color = color;
+}
+
+void CharacterBuffer::EditCharacter(int index, wchar_t character){
+   Character* c = &(*buffer)[index];
+   c->character = character;
+}
+
 void CharacterBuffer::Remove(){
     if(buffer->size() > 0)
         buffer->pop_back();
@@ -57,6 +67,38 @@ void CharacterBuffer::AddCharacterToBuffer(CharacterBuffer* buffer, Character ch
 void CharacterBuffer::RemoveCharacterFromBuffer(CharacterBuffer* buffer){
     buffer->Remove();
 }
+
+void CharacterBuffer::EditCharacterColor(CharacterBuffer* buffer, int index, char Color){
+    if(index >= buffer->Size())
+        return;
+
+    buffer->EditColor(index, Color);
+}
+
+void CharacterBuffer::EditCharacter(CharacterBuffer *buffer, int index, wchar_t character){
+    if(index >= buffer->Size())
+        return;
+
+    buffer->EditCharacter(index, character);
+}
+
+void CharacterBuffer::EditBufferColor(CharacterBuffer *buffer, char color){
+    int bufferLength = buffer->Size();
+
+    for(int i = 0; i < bufferLength; i++){
+        buffer->EditColor(i, color);
+    }
+}
+
+void CharacterBuffer::EditBuffer(CharacterBuffer *buffer, const wchar_t* string){
+    int bufferLength = buffer->Size();
+
+    for(int i = 0; i < bufferLength; i++){
+        buffer->EditCharacter(i, string[i]);
+    }
+}
+
+//void CharacterBuffer::EditCharacterInBuffer(CharacterBuffer* buffer, int index, wchar_t character);
 
 void CharacterBuffer::ClearBuffer(CharacterBuffer* buffer){
     buffer->buffer->clear();

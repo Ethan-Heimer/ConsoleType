@@ -75,6 +75,9 @@ class Display{
 
     private:
         static std::vector<CharacterBuffer*> buffers;
+        
+        static void RenderLine(Character* characters, int lineLength, int lineNumber);
+
         static CharacterBuffer* GetBuffer(unsigned int buffer);
 
         static void RenderTextBox(std::wstring heading, std::wstring* lines, int lineCount, char color, CharacterBuffer* buffer);
