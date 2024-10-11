@@ -26,7 +26,7 @@ void MenuState::WhileInState(){
    Display::Clear(inputBuffer);
    Display::TextBox(L"Command Line", inputStream->str(), WHITE, inputBuffer);
 
-   /*
+   /* 
    if(Input::IsKeyDown() && *commandFailed == true){
        *commandFailed = false;
        CharacterBuffer::EditBufferColor(inputBuffer, WHITE);
