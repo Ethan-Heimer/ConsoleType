@@ -81,8 +81,5 @@ class Display{
         static CharacterBuffer* GetBuffer(unsigned int buffer);
 
         static void RenderTextBox(std::wstring heading, std::wstring* lines, int lineCount, char color, CharacterBuffer* buffer);
-        static int GetLongestStringLength(std::wstring* strings, int count);
-
-        static wchar_t ConvertCharToWChar(char character);
-        static std::wstring ConvertStringToWString(std::string string);
+        static int GetLongestStringLength(std::wstring* strings, int count); 
 };

@@ -1,11 +1,6 @@
-#include <cstddef>
 #include <cstdlib>
-#include <filesystem>
-#include <ios>
 #include <ncurses.h>
 #include <ncursesw/ncurses.h>
-#include <sstream>
-#include <string.h>
 #include <string>
 #include <strings.h>
 #include <algorithm>
@@ -14,6 +9,7 @@
 #include "display.h"
 #include "characterBuffer.h"
 #include "../utils/debug.h"
+#include "../utils/stringUtils.h"
 
 #define MAINBUFFER Display::GetBuffer(0)
 
@@ -297,9 +293,9 @@ void Display::RenderTextBox(wstring heading, wstring* lines, int lineCount, char
     if(headLen > boxlen)
         boxlen = headLen;
 
-    Char(L'┌', color, buffer);
+    Char(L'╭', color, buffer);
     Header(heading, boxlen, L'─', color, buffer);
-    Char(L'┐', color, buffer);
+    Char(L'╮', color, buffer);
     Char('\n', color, buffer);
 
     for(int i = 0; i < lineCount; i++){    
@@ -325,9 +321,9 @@ void Display::RenderTextBox(wstring heading, wstring* lines, int lineCount, char
         Char('\n', color, buffer);
     }
 
-    Char(L'└', color, buffer); 
+    Char(L'╰', color, buffer); 
     Line(L'─', boxlen, color, buffer);
-    Char(L'┘', color, buffer);  
+    Char(L'╯', color, buffer);  
 }
 
 int Display::GetLongestStringLength(wstring* lines, int lineCount){
@@ -346,19 +342,4 @@ int Display::GetLongestStringLength(wstring* lines, int lineCount){
 
 CharacterBuffer* Display::GetBuffer(unsigned int index){
    return buffers[index]; 
-}
-
-wchar_t Display::ConvertCharToWChar(char character){
-   char str[2] = {character, '\0'}; 
-   
-   wchar_t wchar[strlen(str)];
-   mbstowcs(wchar, str, sizeof(wchar));
-   
-   return wchar[0];
-}
-
-wstring Display::ConvertStringToWString(string string){
-    std::wstring temp(string.length(),L' ');
-    std::copy(string.begin(), string.end(), temp.begin());
-    return temp; 
 }

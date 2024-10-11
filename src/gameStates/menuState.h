@@ -1,5 +1,6 @@
 #include "../utils/stateMachiene.h"
 #include "../display/display.h"
+#include "sstream"
 
 class MenuState : public IState{
     public:
@@ -8,6 +9,6 @@ class MenuState : public IState{
         void WhileInState();
         void Transition(StateMachiene& owner);
 
-    public: 
         CharacterBuffer* inputBuffer = nullptr;
+        std::wstringstream* inputStream{};
 };
