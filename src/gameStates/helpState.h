@@ -8,6 +8,7 @@ class HelpState : public IState{
         void WhileInState();
         void Transition(StateMachiene& owner);
 
-    public: 
+    private: 
         CharacterBuffer* inputBuffer = nullptr;
+        std::wstringstream* inputStream{};
 };

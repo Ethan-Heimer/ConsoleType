@@ -171,6 +171,10 @@ void Display::String(wstring string, char color, CharacterBuffer* buffer){
     }
 }
 
+void Display::Number(int number){
+    Display::String(std::to_string(number));
+}
+
 void Display::Char(char character){
     Char(character, WHITE);
 }

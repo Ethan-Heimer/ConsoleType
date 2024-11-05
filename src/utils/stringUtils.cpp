@@ -2,23 +2,63 @@
 
 #include <cstring>
 #include <sstream>
+#include <vector>
 
-void RemoveCharFromSStream(stringstream& stream){
-    string str = stream.str();
+vector<wstring> Split(wstring str, wstring& delimiter){
+    vector<wstring> tokens;
+    wstring token;
 
-    if(str.length() > 0)
-        str.pop_back();
+    size_t pos = 0;
 
-    stream.str(str);
+    while ((pos = str.find(delimiter)) != std::string::npos) {
+        token = str.substr(0, pos);
+        tokens.push_back(token);
+        str.erase(0, pos + delimiter.length());
+    }
+
+    tokens.push_back(str);
+    return tokens;
 }
 
-void RemoveWCharFromWStream(wstringstream& stream){
-    wstring str = stream.str();
+vector<string> Split(string str, string& delimiter){
+    vector<string> tokens;
+    string token;
+
+    size_t pos = 0;
+
+    while ((pos = str.find(delimiter)) != std::string::npos) {
+        token = str.substr(0, pos);
+        tokens.push_back(token);
+        str.erase(0, pos + delimiter.length());
+    }
+
+    tokens.push_back(str);
+    return tokens;
+}
+
+void RemoveCharFromSStream(stringstream* stream){
+    string str = stream->str();
 
     if(str.length() > 0)
         str.pop_back();
 
-    stream.str(str);
+    stream->str("");
+
+    for(int i = 0; i < str.length(); i++)
+        (*stream) << str[i];
+}
+
+void RemoveWCharFromWStream(wstringstream* stream){
+    wstring str = stream->str();
+
+    if(str.length() > 0)
+        str.pop_back();
+
+    stream->str(L"");
+
+    for(int i = 0; i < str.length(); i++)
+        (*stream) << str[i];
+    
 }
 
 wchar_t ConvertCharToWChar(char character){

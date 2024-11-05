@@ -52,6 +52,8 @@ class Display{
         static void String(std::wstring string, char color);
         static void String(std::wstring string, char color, CharacterBuffer* buffer);
 
+        static void Number(int number);
+
         static void Char(char character);
         static void Char(char character, char color);
         static void Char(char character, char color, CharacterBuffer* buffer);
